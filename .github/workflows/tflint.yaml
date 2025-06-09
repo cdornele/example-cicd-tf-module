@@ -1,0 +1,33 @@
+name: Terraform Lint
+
+on: 
+  workflow_call:
+    inputs:
+      working-directory:
+        type: string
+        default: .
+      
+
+jobs:
+  terraform-lint:
+    runs-on: ubuntu-latest
+    
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.10.0
+          terraform_wrapper: false
+
+      - name: Install tflint
+        uses: terraform-linters/setup-tflint@v3
+
+      - name: Run tflint
+        run: | 
+          tflint --init
+          tflint --format=json > tflint-results.json
+        working-directory: ${{ inputs.working-directory }}
