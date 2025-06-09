@@ -2,7 +2,7 @@ name: Generic CI/CD Example
 
 on: 
   workflow_call:
-
+  
 jobs:
  tflint:
     uses: ./.github/workflows/tflint.yaml
@@ -10,3 +10,4 @@ jobs:
       working-directory: .
     secrets: 
       repo_token: ${{ secrets.GITHUB_TOKEN }}
+  
